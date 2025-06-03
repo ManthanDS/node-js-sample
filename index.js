@@ -1,13 +1,20 @@
-var express = require('express')
-var app = express()
+// server.js
 
-app.set('port', (process.env.PORT || 5000))
-app.use(express.static(__dirname + '/public'))
+const express = require('express');
+const app = express();
 
-app.get('/', function(request, response) {
-  response.send('Hello World!')
-})
+// Set the port (default to 3000 if not specified)
+app.set('port', process.env.PORT || 3000);
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'))
-})
+// Serve static files from 'public' folder (optional)
+app.use(express.static(__dirname + '/public'));
+
+// Simple route
+app.get('/', (req, res) => {
+    res.send('Hello World from Node.js App!');
+});
+
+// Listen on all network interfaces (important for Docker/Kubernetes)
+app.listen(app.get('port'), '0.0.0.0', () => {
+    console.log('Node app is running on port', app.get('port'));
+});
